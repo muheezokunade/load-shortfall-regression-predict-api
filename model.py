@@ -48,30 +48,10 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    # predict_vector = feature_vector_df[['Madrid_wind_speed','Bilbao_rain_1h','Valencia_wind_speed']]
-
-    # fill the missing value in Valencia_pressure with the mean, which is 1012.
-    #Train Data
-    feature_vector_df = feature_vector_df.fillna(feature_vector_df.Valencia_pressure.mean(), inplace= True)
-    # Connvert both Seville_pressure to numerical columns by scrapping off the 'sp' infrom of it
-    feature_vector_df.Seville_pressure = feature_vector_df.Seville_pressure.str[2:]
-    # Convert to data type int
-    feature_vector_df = feature_vector_df['Seville_pressure'] = feature_vector_df['Seville_pressure'].astype(int) 
-    # Connvert both Valencia_wind_deg to numerical columns by scrapping off the 'level_' infrom of it
-
-    feature_vector_df = feature_vector_df.Valencia_wind_deg = feature_vector_df.Valencia_wind_deg.str[6:]
-    # Convert to data type int
-    feature_vector_df['Valencia_wind_deg'] = feature_vector_df['Valencia_wind_deg'].astype(int)
-    """
-    We had to convert the time type from an object to a datetime format using the 'astype' method before desampling
-
-    """
-    
-
-    
+    predict_vector = feature_vector_df[['Madrid_wind_speed','Bilbao_rain_1h','Valencia_wind_speed']]
     # ------------------------------------------------------------------------
 
-    return feature_vector_df
+    return predict_vector
 
 def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
@@ -85,30 +65,3 @@ def load_model(path_to_model:str):
     -------
     <class: sklearn.estimator>
         The pretrained model loaded into memory.
-    """
-    return pickle.load(open(path_to_model, 'rb'))
-
-
-""" You may use this section (above the make_prediction function) of the python script to implement 
-    any auxiliary functions required to process your model's artifacts.
-"""
-
-def make_prediction(data, model):
-    """Prepare request data for model prediction.
-    Parameters
-    ----------
-    data : str
-        The data payload received within POST requests sent to our API.
-    model : <class: sklearn.estimator>
-        An sklearn model object.
-    Returns
-    -------
-    list
-        A 1-D python list containing the model prediction.
-    """
-    # Data preprocessing.
-    prep_data = _preprocess_data(data)
-    # Perform prediction with model and preprocessed data.
-    prediction = model.predict(prep_data)
-    # Format as list for output standardisation.
-    return prediction[0].tolist()
