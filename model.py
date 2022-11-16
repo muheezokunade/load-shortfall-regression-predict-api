@@ -38,6 +38,21 @@ def _preprocess_data(data):
     feature_vector_dict = json.loads(data)
     # Load the dictionary as a Pandas DataFrame.
     feature_vector_df = pd.DataFrame.from_dict([feature_vector_dict])
+    new_f = ['Unnamed: 0', 'Madrid_wind_speed', 'Bilbao_rain_1h',
+            'Valencia_wind_speed', 'Seville_humidity', 'Madrid_humidity',
+            'Bilbao_clouds_all', 'Bilbao_wind_speed', 'Seville_clouds_all',
+            'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
+            'Madrid_clouds_all', 'Seville_wind_speed', 'Barcelona_rain_1h',
+            'Seville_rain_1h', 'Bilbao_snow_3h', 'Barcelona_pressure',
+            'Seville_rain_3h', 'Madrid_rain_1h', 'Barcelona_rain_3h',
+            'Valencia_snow_3h', 'Madrid_weather_id', 'Barcelona_weather_id',
+            'Bilbao_pressure', 'Seville_weather_id', 'Seville_temp_max',
+            'Madrid_pressure', 'Valencia_temp_max', 'Valencia_temp',
+            'Bilbao_weather_id', 'Seville_temp', 'Valencia_humidity',
+            'Valencia_temp_min', 'Barcelona_temp_max', 'Madrid_temp_max',
+            'Barcelona_temp', 'Bilbao_temp_min', 'Bilbao_temp',
+            'Barcelona_temp_min', 'Bilbao_temp_max', 'Seville_temp_min',
+            'Madrid_temp', 'Madrid_temp_min']
 
     # ---------------------------------------------------------------
     # NOTE: You will need to swap the lines below for your own data
@@ -48,7 +63,7 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    predict_vector = feature_vector_df[['Madrid_wind_speed','Bilbao_rain_1h','Valencia_wind_speed']]
+    predict_vector = feature_vector_df[new_f]
     # ------------------------------------------------------------------------
 
     return predict_vector
@@ -65,3 +80,30 @@ def load_model(path_to_model:str):
     -------
     <class: sklearn.estimator>
         The pretrained model loaded into memory.
+    """
+    return pickle.load(open(path_to_model, 'rb'))
+
+
+""" You may use this section (above the make_prediction function) of the python script to implement 
+    any auxiliary functions required to process your model's artifacts.
+"""
+
+def make_prediction(data, model):
+    """Prepare request data for model prediction.
+    Parameters
+    ----------
+    data : str
+        The data payload received within POST requests sent to our API.
+    model : <class: sklearn.estimator>
+        An sklearn model object.
+    Returns
+    -------
+    list
+        A 1-D python list containing the model prediction.
+    """
+    # Data preprocessing.
+    prep_data = _preprocess_data(data)
+    # Perform prediction with model and preprocessed data.
+    prediction = model.predict(prep_data)
+    # Format as list for output standardisation.
+    return prediction[0].tolist()
