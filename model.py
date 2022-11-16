@@ -56,22 +56,22 @@ def _preprocess_data(data):
     # fill the missing value in Valencia_pressure with the mean, which is 1012.
 
     #Train Data
-    df.fillna(df.Valencia_pressure.mean(), inplace= True)
+    #df.fillna(df.Valencia_pressure.mean(), inplace= True)
 
     #Test data
-    df_test.fillna(df_test.Valencia_pressure.mean(), inplace= True)
+    #df_test.fillna(df_test.Valencia_pressure.mean(), inplace= True)
 
     # Connvert both Seville_pressure to numerical columns by scrapping off the 'sp' infrom of it
 
-    df.Seville_pressure = df.Seville_pressure.str[2:]
+    #df.Seville_pressure = df.Seville_pressure.str[2:]
 
     # Test data
-    df_test.Seville_pressure = df_test.Seville_pressure.str[2:]
+    #df_test.Seville_pressure = df_test.Seville_pressure.str[2:]
     # Convert to data type int
-    df['Seville_pressure'] = df['Seville_pressure'].astype(int)
+    #df['Seville_pressure'] = df['Seville_pressure'].astype(int)
 
     # Test Data
-    df_test['Seville_pressure'] = df_test['Seville_pressure'].astype(int)
+    #df_test['Seville_pressure'] = df_test['Seville_pressure'].astype(int)
 
 
     # Convert the json string to a python dictionary object
