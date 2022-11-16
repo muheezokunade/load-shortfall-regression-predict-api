@@ -61,19 +61,12 @@ def _preprocess_data(data):
 
     feature_vector_df = feature_vector_df.Valencia_wind_deg = feature_vector_df.Valencia_wind_deg.str[6:]
     # Convert to data type int
-    feature_vector_df = feature_vector_df['Valencia_wind_deg'] = feature_vector_df['Valencia_wind_deg'].astype(int)
+    feature_vector_df['Valencia_wind_deg'] = feature_vector_df['Valencia_wind_deg'].astype(int)
     """
     We had to convert the time type from an object to a datetime format using the 'astype' method before desampling
 
     """
-    feature_vector_df['Year']  = feature_vector_df['time'].astype('datetime64').dt.year
-    feature_vector_df['Month_of_year']  = feature_vector_df['time'].astype('datetime64').dt.month
-    feature_vector_df['Week_of_year'] = feature_vector_df['time'].astype('datetime64').dt.weekofyear
-    feature_vector_df['Day_of_year']  = feature_vector_df['time'].astype('datetime64').dt.dayofyear
-    feature_vector_df['Day_of_month']  = eature_vector_df['time'].astype('datetime64').dt.day
-    feature_vector_df['Day_of_week'] = feature_vector_df['time'].astype('datetime64').dt.dayofweek
-    feature_vector_df['Hour_of_week'] = ((feature_vector_df['time'].astype('datetime64').dt.dayofweek) * 24 + 24) - (24 - df['time'].astype('datetime64').dt.hour)
-    feature_vector_df['Hour_of_day']  = feature_vector_df['time'].astype('datetime64').dt.hour
+    
 
     
     # ------------------------------------------------------------------------
