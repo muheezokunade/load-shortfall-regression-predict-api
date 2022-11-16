@@ -78,7 +78,7 @@ def _preprocess_data(data):
     feature_vector_dict = json.loads(data)
     # Load the dictionary as a Pandas DataFrame.
     feature_vector_df = pd.DataFrame.from_dict([feature_vector_dict])
-    new_f = ['Unnamed: 0', 'Madrid_wind_speed', 'Bilbao_rain_1h',
+    new_f = [ 'Madrid_wind_speed', 'Bilbao_rain_1h',
             'Valencia_wind_speed', 'Seville_humidity', 'Madrid_humidity',
             'Bilbao_clouds_all', 'Bilbao_wind_speed', 'Seville_clouds_all',
             'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
