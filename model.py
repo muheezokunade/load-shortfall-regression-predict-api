@@ -52,16 +52,16 @@ def _preprocess_data(data):
 
     # fill the missing value in Valencia_pressure with the mean, which is 1012.
     #Train Data
-    feature_vector_df.fillna(feature_vector_df.Valencia_pressure.mean(), inplace= True)
+    feature_vector_df = feature_vector_df.fillna(feature_vector_df.Valencia_pressure.mean(), inplace= True)
     # Connvert both Seville_pressure to numerical columns by scrapping off the 'sp' infrom of it
     feature_vector_df.Seville_pressure = feature_vector_df.Seville_pressure.str[2:]
     # Convert to data type int
-    feature_vector_df['Seville_pressure'] = feature_vector_df['Seville_pressure'].astype(int) 
+    feature_vector_df = feature_vector_df['Seville_pressure'] = feature_vector_df['Seville_pressure'].astype(int) 
     # Connvert both Valencia_wind_deg to numerical columns by scrapping off the 'level_' infrom of it
 
-    feature_vector_df.Valencia_wind_deg = feature_vector_df.Valencia_wind_deg.str[6:]
+    feature_vector_df = feature_vector_df.Valencia_wind_deg = feature_vector_df.Valencia_wind_deg.str[6:]
     # Convert to data type int
-    feature_vector_df['Valencia_wind_deg'] = feature_vector_df['Valencia_wind_deg'].astype(int)
+    feature_vector_df = feature_vector_df['Valencia_wind_deg'] = feature_vector_df['Valencia_wind_deg'].astype(int)
     """
     We had to convert the time type from an object to a datetime format using the 'astype' method before desampling
 
