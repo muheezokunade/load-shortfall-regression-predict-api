@@ -1,4 +1,4 @@
-"""
+""
     Simple Flask-based API for Serving an sklearn Model.
     Author: Explore Data Science Academy.
     Note:
@@ -25,7 +25,7 @@ app = Flask(__name__)
 # Load our model into memory.
 # Please update this path to reflect your own trained model.
 static_model = load_model(
-    path_to_model='assets/trained-models/model.pkl')
+    path_to_model='assets/trained-models/load_shortfall_simple_lm_regression.pkl')
 
 print ('-'*40)
 print ('Model successfully loaded')
@@ -57,4 +57,4 @@ def model_prediction():
 # This will allow Flask to automatically restart itself everytime you
 # update your API code.
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8090, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=False)
