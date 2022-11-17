@@ -38,21 +38,32 @@ def _preprocess_data(data):
     feature_vector_dict = json.loads(data)
     # Load the dictionary as a Pandas DataFrame.
     feature_vector_df = pd.DataFrame.from_dict([feature_vector_dict])
-    new_f = ['Unnamed: 0', 'Madrid_wind_speed', 'Bilbao_rain_1h',
-            'Valencia_wind_speed', 'Seville_humidity', 'Madrid_humidity',
-            'Bilbao_clouds_all', 'Bilbao_wind_speed', 'Seville_clouds_all',
-            'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
-            'Madrid_clouds_all', 'Seville_wind_speed', 'Barcelona_rain_1h',
-            'Seville_rain_1h', 'Bilbao_snow_3h', 'Barcelona_pressure',
-            'Seville_rain_3h', 'Madrid_rain_1h', 'Barcelona_rain_3h',
-            'Valencia_snow_3h', 'Madrid_weather_id', 'Barcelona_weather_id',
-            'Bilbao_pressure', 'Seville_weather_id', 'Seville_temp_max',
-            'Madrid_pressure', 'Valencia_temp_max', 'Valencia_temp',
-            'Bilbao_weather_id', 'Seville_temp', 'Valencia_humidity',
-            'Valencia_temp_min', 'Barcelona_temp_max', 'Madrid_temp_max',
-            'Barcelona_temp', 'Bilbao_temp_min', 'Bilbao_temp',
-            'Barcelona_temp_min', 'Bilbao_temp_max', 'Seville_temp_min',
-            'Madrid_temp', 'Madrid_temp_min']
+    feature_vector_df.fillna(0, inplace= True)
+    feature_vector_df.Seville_pressure = feature_vector_df.Seville_pressure.str[2:]
+    feature_vector_df['Seville_pressure'] = feature_vector_df['Seville_pressure'].astype(int)
+    feature_vector_df.Valencia_wind_deg = feature_vector_df.Valencia_wind_deg.str[6:]
+    feature_vector_df['Valencia_wind_deg'] = feature_vector_df['Valencia_wind_deg'].astype(int)
+    
+    feature_vector_df['Year']  = feature_vector_df['time'].astype('datetime64').dt.year
+    feature_vector_df['Month_of_year']  = feature_vector_df['time'].astype('datetime64').dt.month
+    feature_vector_df['Week_of_year'] = feature_vector_df['time'].astype('datetime64').dt.weekofyear
+    feature_vector_df['Day_of_year']  = feature_vector_df['time'].astype('datetime64').dt.dayofyear
+    feature_vector_df['Day_of_month']  = feature_vector_df['time'].astype('datetime64').dt.day
+    feature_vector_df['Day_of_week'] = feature_vector_df['time'].astype('datetime64').dt.dayofweek
+    feature_vector_df['Hour_of_week'] = ((feature_vector_df['time'].astype('datetime64').dt.dayofweek) * 24 + 24) - (24 - df['time'].astype('datetime64').dt.hour)
+    feature_vector_df['Hour_of_day']  = feature_vector_df['time'].astype('datetime64').dt.hour
+    feature_vector_df = feature_vector_df.drop(columns=['Week_of_year','Day_of_year','Hour_of_week','time'])
+    feature_vector_df = feature_vector_df[['Madrid_wind_speed', 'Valencia_wind_deg', 'Bilbao_rain_1h',
+       'Valencia_wind_speed', 'Seville_humidity', 'Madrid_humidity',
+       'Bilbao_clouds_all', 'Bilbao_wind_speed', 'Seville_clouds_all',
+       'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
+       'Madrid_clouds_all', 'Seville_wind_speed', 'Barcelona_rain_1h',
+       'Seville_pressure', 'Seville_rain_1h', 'Bilbao_snow_3h',
+       'Barcelona_pressure', 'Seville_rain_3h', 'Madrid_rain_1h',
+       'Barcelona_rain_3h', 'Valencia_snow_3h', 'Madrid_weather_id',
+       'Barcelona_weather_id', 'Bilbao_pressure', 'Seville_weather_id',
+       'Valencia_pressure', 'Seville_temp_max', 'Bilbao_weather_id', 
+        'Valencia_humidity', 'Year', 'Month_of_year', 'Day_of_month', 'Day_of_week', 'Hour_of_day']]
 
     # ---------------------------------------------------------------
     # NOTE: You will need to swap the lines below for your own data
@@ -63,7 +74,7 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    predict_vector = feature_vector_df[new_f]
+    predict_vector = feature_vector_df
     # ------------------------------------------------------------------------
 
     return predict_vector
